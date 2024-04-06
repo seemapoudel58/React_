@@ -17,24 +17,34 @@ function App() {
   }, []);
 
   const [value, setValue] = useState("");
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-  // const serachImage = () =>{
-  //   const filteredImage = photoList.filter((image) =>{
-  //     image.alt_description =
-  //     image.alt_description=== null? 'No Caption': image.alt_descritpion;
-  //     return image.alt_description;
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  //   })
-  //   setPhotoList(filteredImage);
-  // }
+    // if there's no search text then return or do nothing
+    if (!value.trim()) return;
+
+    axios
+      .get(
+        `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
+      )
+      .then((response) => setPhotoList(response.data.results));
+
+    setValue("");
+  };
 
   return (
     <>
       <Header />
-      <Search handleChange={handleChange} value={value} />
+      <Search
+        handleChange={handleChange}
+        value={value}
+        handleSubmit={handleSubmit}
+      />
       {/* <Option /> */}
       <Pictures photoList={photoList} />
     </>
