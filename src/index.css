@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes movingBorder {
+  0% {
+    transform: rotate(0deg) scale(10);
+  }
+
+  100% {
+    transform: rotate(-360deg) scale(10);
+  }
+}
+
+.moving-border {
+  animation: movingBorder 6s linear infinite;
+}
