@@ -13,8 +13,10 @@ const Pictures = ({ photoList }) => {
             >
               <img
                 src={photo.urls.regular}
+                alt={photo.alt_description || "No Caption"}
                 className="h-[100%] hover:scale-105 hover:brightness-75 w-[100%] object-cover transition-transform duration-300 ease-in-out"
               />
+              <p>{photo.alt_description}</p>
             </li>
           );
         })}

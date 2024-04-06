@@ -1,4 +1,4 @@
-const Search = () => {
+const Search = ({ value, handleChange }) => {
   return (
     <div className="mx-auto flex w-full max-w-lg items-center justify-center mt-8">
       <div className="relative z-10 flex w-full cursor-pointer items-center overflow-hidden rounded-3xl border border-slate-200 p-[2px]">
@@ -7,7 +7,9 @@ const Search = () => {
           <input
             type="text"
             name="search"
-            className="mr-2 inline-block h-full flex-1 rounded-lg bg-transparent px-2 py-1 text-gray-500 placeholder:text-slate-700 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+            value={value}
+            onChange={handleChange}
+            className="mr-2 inline-block h-full flex-1 rounded-lg bg-transparent px-2 py-1 text-gray-500 placeholder:text-slate-700 focus:outline-none"
             placeholder="Search for anything"
           />
         </div>
