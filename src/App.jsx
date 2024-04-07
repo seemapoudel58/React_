@@ -9,20 +9,25 @@ import axios from "axios";
 
 function App() {
   const [photoList, setPhotoList] = useState([]);
+  const [loading , setLoading] = useState(false) ;
+  const [value, setValue] = useState("");
 
   useEffect(() => {
+
+    setLoading(true);
     axios
       .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
       .then((response) => setPhotoList(response.data));
+      setLoading(false);
   }, []);
 
-  const [value, setValue] = useState("");
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
 
     // if there's no search text then return or do nothing
@@ -33,7 +38,7 @@ function App() {
         `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => setPhotoList(response.data.results));
-
+      setLoading(false);
     setValue("");
   };
 
@@ -46,7 +51,7 @@ function App() {
         handleSubmit={handleSubmit}
       />
       {/* <Option /> */}
-      <Pictures photoList={photoList} />
+      <Pictures photoList={photoList} loading={loading} />
     </>
   );
 }
