@@ -6,7 +6,7 @@ const Pictures = ({ photoList, loading, error }) => {
       {loading ? (
         <p>Loading....</p>
       ) : error ? (
-        <p>Error:{error.message}</p>
+        <p>Error: {error}</p>
       ) : (
         <>
           <h3 className="mt-[1rem] text-4xl font-semibold ">Pictures</h3>

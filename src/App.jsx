@@ -17,9 +17,12 @@ function App() {
     setLoading(true);
 
     axios
-      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
+      .get(`https://api.{ACCESS_KEY}`)
       .then((response) => {
         setPhotoList(response.data);
+      })
+      .catch((error)=>{
+        setError(error.message);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -40,6 +43,9 @@ function App() {
         `http://abc${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => setPhotoList(response.data.results))
+      .catch((error)=>{
+        setError(error.message);
+      })
       .finally(() => {
         setLoading(false);
       });
