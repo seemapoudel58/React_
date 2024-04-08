@@ -10,15 +10,19 @@ import axios from "axios";
 function App() {
   const [photoList, setPhotoList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const[error, setError] = useState(null);
   const [value, setValue] = useState("");
 
   useEffect(() => {
     setLoading(true);
 
     axios
-      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
+      .get(`https://api.{ACCESS_KEY}`)
       .then((response) => {
         setPhotoList(response.data);
+      })
+      .catch((error)=>{
+        setError(error.message);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -36,9 +40,12 @@ function App() {
 
     axios
       .get(
-        `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
+        `http://abc${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => setPhotoList(response.data.results))
+      .catch((error)=>{
+        setError(error.message);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -55,7 +62,7 @@ function App() {
         handleSubmit={handleSubmit}
       />
       {/* <Option /> */}
-      <Pictures photoList={photoList} loading={loading} />
+      <Pictures photoList={photoList} loading={loading} error= {error} />
     </>
   );
 }
