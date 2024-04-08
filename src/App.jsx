@@ -43,6 +43,12 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   }, []);
   
@@ -74,6 +80,12 @@ function App() {
       .finally(()=>{
         setLoading(false);
       })
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     setValue("");
   };
