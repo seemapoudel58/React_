@@ -10,9 +10,11 @@ import axios from "axios";
 function App() {
   const [photoList, setPhotoList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const[error, setError] = useState(null);
   const [value, setValue] = useState("");
 
   useEffect(() => {
+<<<<<<< Updated upstream
     setLoading(true); 
     const delay = setTimeout(() => {
       axios
@@ -24,6 +26,24 @@ function App() {
     }, 2000);
   
     return () => clearTimeout(delay);
+=======
+    setLoading(true);
+    axios
+      .get('http://abc.com')
+      .then((response) => {
+        setPhotoList(response.data);
+        // if(!response.ok){
+        //   throw Error(response.statusText);
+        // }
+      })
+      .catch((error) => {
+       console.log(error.message);
+       setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+>>>>>>> Stashed changes
   }, []);
   
   const handleChange = (e) => {
@@ -40,10 +60,21 @@ function App() {
 
     axios
       .get(
-        `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
+        `http://abc${value}&client_id=${ACCESS_KEY}`
       )
+<<<<<<< Updated upstream
       .then((response) => setPhotoList(response.data.results));
     setLoading(false);
+=======
+      .then((response) => setPhotoList(response.data.results))
+      .catch((error) => {
+        console.error( error.message);
+        setError(error);
+      })
+      .finally(()=>{
+        setLoading(false);
+      })
+>>>>>>> Stashed changes
     setValue("");
   };
 
@@ -56,7 +87,7 @@ function App() {
         handleSubmit={handleSubmit}
       />
       {/* <Option /> */}
-      <Pictures photoList={photoList} loading={loading} />
+      <Pictures photoList={photoList} loading={loading} error= {error} />
     </>
   );
 }
