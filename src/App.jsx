@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/header";
 import Search from "./Components/search";
@@ -13,21 +13,17 @@ function App() {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setLoading(true); 
-    const delay = setTimeout(() => {
-      axios
-        .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
-        .then((response) => {
-          setPhotoList(response.data);
-          setLoading(false); 
-        })
-    }, 2000);
-  
-    return () => clearTimeout(delay);
-  }, []);
-  
-  const handleChange = (e) => {
+    setLoading(true);
 
+    axios
+      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
+      .then((response) => {
+        setPhotoList(response.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleChange = (e) => {
     setValue(e.target.value);
   };
 
@@ -42,8 +38,11 @@ function App() {
       .get(
         `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
       )
-      .then((response) => setPhotoList(response.data.results));
-    setLoading(false);
+      .then((response) => setPhotoList(response.data.results))
+      .finally(() => {
+        setLoading(false);
+      });
+
     setValue("");
   };
 
