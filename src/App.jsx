@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/header";
 import Search from "./Components/search";
@@ -14,46 +14,17 @@ function App() {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    setLoading(true); 
-    const delay = setTimeout(() => {
-      axios
-        .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
-        .then((response) => {
-          setPhotoList(response.data);
-          setLoading(false); 
-        })
-    }, 2000);
-  
-    return () => clearTimeout(delay);
-=======
     setLoading(true);
+
     axios
-      .get('http://abc.com')
+      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
       .then((response) => {
         setPhotoList(response.data);
-        // if(!response.ok){
-        //   throw Error(response.statusText);
-        // }
       })
-      .catch((error) => {
-       console.log(error.message);
-       setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+      .finally(() => setLoading(false));
   }, []);
-  
-  const handleChange = (e) => {
 
+  const handleChange = (e) => {
     setValue(e.target.value);
   };
 
@@ -68,25 +39,11 @@ function App() {
       .get(
         `http://abc${value}&client_id=${ACCESS_KEY}`
       )
-<<<<<<< Updated upstream
-      .then((response) => setPhotoList(response.data.results));
-    setLoading(false);
-=======
       .then((response) => setPhotoList(response.data.results))
-      .catch((error) => {
-        console.error( error.message);
-        setError(error);
-      })
-      .finally(()=>{
+      .finally(() => {
         setLoading(false);
-      })
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+      });
+
     setValue("");
   };
 
