@@ -9,18 +9,16 @@ import axios from "axios";
 
 function App() {
   const [photoList, setPhotoList] = useState([]);
-  const [loading , setLoading] = useState(false) ;
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
 
   useEffect(() => {
-
     setLoading(true);
     axios
       .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
       .then((response) => setPhotoList(response.data));
-      setLoading(false);
+    setLoading(false);
   }, []);
-
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -38,7 +36,7 @@ function App() {
         `https://api.unsplash.com/search/photos?query=${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => setPhotoList(response.data.results));
-      setLoading(false);
+    setLoading(false);
     setValue("");
   };
 

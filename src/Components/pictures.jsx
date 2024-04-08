@@ -13,19 +13,18 @@ const Pictures = ({ photoList, loading }) => {
               return (
                 <li
                   key={index}
-                  className=" h-[100%] overflow-hidden w-full relative rounded-3xl  shadow-lg cursor-pointer md:h-[18rem] lg:h-[20rem] mb-[5rem]"
+                  className="overflow-hidden w-full aspect-[3/3.5] relative rounded-3xl  shadow-lg cursor-pointer flex justify-center items-end group"
                 >
-                  <div className=" h-[85%] md:h-[70%] lg:h-[70%]">
+                  <div className="h-full w-full">
                     <img
                       src={photo.urls.regular}
                       alt={photo.alt_description || "No Caption"}
-                      className="  h-[100%]  rounded-3xl hover:scale-105 hover:brightness-75 w-[100%] object-cover transition-transform duration-300 ease-in-out"
+                      className="w-full h-full rounded-3xl hover:brightness-[.2] object-cover transition-transform duration-300 ease-in-out"
                     />
-
-                    <p className=" p-5 mb-8 font-semibold mx-auto max-w-[20rem] md:text-[15px]">
-                      {photo.alt_description}
-                    </p>
                   </div>
+                  <p className="hidden absolute italic mb-4 px-2 z-20 group-hover:block transition-all duration-300 ease-in-out capitalize text-white text-md">
+                    {photo.alt_description}
+                  </p>
                 </li>
               );
             })}
