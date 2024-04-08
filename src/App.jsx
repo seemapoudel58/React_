@@ -13,14 +13,21 @@ function App() {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
-      .then((response) => setPhotoList(response.data));
-    setLoading(false);
+    setLoading(true); 
+    const delay = setTimeout(() => {
+      axios
+        .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
+        .then((response) => {
+          setPhotoList(response.data);
+          setLoading(false); 
+        })
+    }, 2000);
+  
+    return () => clearTimeout(delay);
   }, []);
-
+  
   const handleChange = (e) => {
+
     setValue(e.target.value);
   };
 
