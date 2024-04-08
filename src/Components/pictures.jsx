@@ -1,12 +1,13 @@
 import React from "react";
+import Error from "./error";
 
 const Pictures = ({ photoList, loading, error }) => {
   return (
     <div>
       {loading ? (
         <p>Loading....</p>
-      ) : error ? (
-        <p>Error: {error}</p>
+      ) : error ? (     
+          <Error />
       ) : (
         <>
           <h3 className="mt-[1rem] text-4xl font-semibold ">Pictures</h3>
