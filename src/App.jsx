@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Components/header";
 import Search from "./Components/search";
-// import Option from "./Components/option";
+import Option from "./Components/option";
 import Pictures from "./Components/pictures";
 import { ACCESS_KEY } from "./Components/config";
 import axios from "axios";
@@ -17,7 +17,7 @@ function App() {
     setLoading(true);
 
     axios
-      .get(`https://api.{ACCESS_KEY}`)
+      .get(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`)
       .then((response) => {
         setPhotoList(response.data);
       })
@@ -40,7 +40,7 @@ function App() {
 
     axios
       .get(
-        `http://abc${value}&client_id=${ACCESS_KEY}`
+        `https://api.unsplash.com/search/photos?page=1&query=${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => setPhotoList(response.data.results))
       .catch((error)=>{
@@ -53,6 +53,24 @@ function App() {
     setValue("");
   };
 
+  const officePhotos = (e)=>{
+    e.preventDefault();
+    setLoading(true);
+    axios.get('https://api.unsplash.com/search/photos?page=1&query=office')
+    .then((response) => setPhotoList(response.data.result))
+    .catch((error)=>{
+      setError(error.message);
+    })
+    .finally(()=>{
+      setLoading(false);
+    })
+
+
+    
+  
+
+  }
+
   return (
     <>
       <Header />
@@ -62,7 +80,7 @@ function App() {
         handleSubmit={handleSubmit}
         error ={error}
       />
-      {/* <Option /> */}
+      <Option office = {officePhotos} />
       <Pictures photoList={photoList} loading={loading} error= {error} />
     </>
   );
