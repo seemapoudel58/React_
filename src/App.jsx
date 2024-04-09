@@ -42,7 +42,7 @@ function App() {
       .get(
         `https://api.unsplash.com/search/photos?page=1&query=${value}&client_id=${ACCESS_KEY}`
       )
-      .then((response) => setPhotoList(response.data.results))
+      .then((response) => setPhotoList(response.data.result))
       .catch((error)=>{
         setError(error.message);
       })
@@ -56,7 +56,7 @@ function App() {
   const officePhotos = (e)=>{
     e.preventDefault();
     setLoading(true);
-    axios.get('https://api.unsplash.com/search/photos?page=1&query=office')
+    axios.get(`https://api.unsplash.com/search/photos?page=1&query=office`)
     .then((response) => setPhotoList(response.data.result))
     .catch((error)=>{
       setError(error.message);
