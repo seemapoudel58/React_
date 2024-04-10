@@ -1,6 +1,5 @@
-const Search = ({ value, handleChange, handleSubmit, error}) => {
-  if(!error){
-
+const Search = ({ value, handleChange, handleSubmit, error }) => {
+  if (!error) {
     return (
       <div className="mx-auto flex w-full max-w-lg items-center justify-center mt-8">
         <div className="relative z-10 flex w-full cursor-pointer items-center overflow-hidden rounded-3xl border border-slate-200 p-[2px]">
