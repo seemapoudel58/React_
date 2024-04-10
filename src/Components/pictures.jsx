@@ -26,7 +26,7 @@ const Pictures = ({ photoList, loading, error }) => {
                     />
                   </div>
                   <p className="hidden absolute italic mb-4 px-2 z-20 group-hover:block transition-all duration-300 ease-in-out capitalize text-white text-md">
-                    {photo.alt_description}
+                    {photo.alt_description || "No Caption"}
                   </p>
                 </li>
               );
