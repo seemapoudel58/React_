@@ -60,6 +60,7 @@ function App() {
         handleChange={handleChange}
         value={value}
         handleSubmit={handleSubmit}
+        error ={error}
       />
       {/* <Option /> */}
       <Pictures photoList={photoList} loading={loading} error= {error} />
