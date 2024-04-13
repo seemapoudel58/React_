@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Search from "./components/Search";
-import Option from "./components/Option";
-import Pictures from "./components/Pictures";
+import Header from './Components/header';
+import Search from "./Components/search";
+import Option from './Components/option';
+import Pictures from "./Components/pictures";
 import { ACCESS_KEY } from "./utils/config";
 import axios from "axios";
 

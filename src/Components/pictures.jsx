@@ -1,4 +1,4 @@
-import Error from "./Error";
+import Error from './error';
 
 const Pictures = ({ photoList, loading, error }) => {
   return (
