@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState(null);
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState("");
+  const[submit, setSubmit] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -46,6 +47,9 @@ function App() {
         setLoading(false);
       });
   }, [filter]);
+  
+
+ 
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -64,6 +68,8 @@ function App() {
       )
       .then((response) => {
         setPhotoList(response.data.results);
+        setSubmit(true);
+
       })
       .catch((error) => {
         setError(error.message);
@@ -72,9 +78,12 @@ function App() {
         setLoading(false);
       });
 
-    setValue("");
+    // setValue("");
   };
-
+  useEffect (()=>{
+    console.log('value:', value);
+    setSubmit(false);
+  },[value]);
   return (
     <>
       <Header />
@@ -85,7 +94,7 @@ function App() {
         error={error}
       />
       <Option setFilter={setFilter} />
-      <Pictures photoList={photoList} loading={loading} error={error} />
+      <Pictures photoList={photoList} loading={loading} error={error} value ={value} submit = {submit}/>
     </>
   );
 }
