@@ -2,7 +2,7 @@ import { OptionItems } from "./OptionItems";
 
 const Option = ({ setFilter }) => {
   return (
-    <div className="max-w-[60vw] mx-auto grid justify-center items-center gap-4 lg:grid-cols-4 md:gap-1 mt-[2rem] ">
+    <div className="max-w-[60vw] mx-auto flex justify-center items-center gap-4 lg:grid-cols-4 md:gap-1 mt-[2rem]  ">
       <ul>
         {OptionItems.map((item) => (
           <li key={item.id}>
