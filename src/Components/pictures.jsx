@@ -1,6 +1,6 @@
 import Error from "./error";
 
-const Pictures = ({ photoList, loading, error, value, submit, filter, }) => {
+const Pictures = ({ photoList, loading, error, value, submit, filter,click }) => {
   return (
     <div>
       {loading ? (
@@ -38,15 +38,18 @@ const Pictures = ({ photoList, loading, error, value, submit, filter, }) => {
               </h2>
             </>
           )}
-          {click && 
-          (
-            <>
-              <h2 className="flex flex-start italic text-lg ">
-                Showing results for {filter}
-              </h2>
-            </>
-          )}
           <ul className="grid grid-cols-1 sm:grid-cols-2 mt-[2rem] gap-5 max-w-[80vw] md:grid-cols-3 lg:grid-cols-4 mx-auto">
+            {click && 
+            (
+              <>
+                <h2 className="flex flex-start italic text-lg ">
+                  Showing results for {filter}
+                
+                </h2>
+                
+              </>
+            )}
+            {console.log('click', click)}
             {photoList.map((photo, index) => {
               return (
                 <li

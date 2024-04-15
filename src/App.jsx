@@ -44,6 +44,7 @@ function App() {
       {
         setPhotoList(response.data.results)
         setClick(true);
+        setSubmit(false);
       })
       .catch((error) => {
         setError(error.message);
@@ -72,7 +73,7 @@ function App() {
       .then((response) => {
         setPhotoList(response.data.results);
         setSubmit(true);
-        setClick(true);
+        setClick(false);
         console.log('searchClicked:', click);
 
 
@@ -89,8 +90,8 @@ function App() {
   useEffect (()=>{
     // console.log('value:', value);
     setSubmit(false);
-    setClick(false);
-  },[value, click]);
+    // setClick(false);
+  },[value]);
   return (
     <>
       <Header />
