@@ -14,6 +14,7 @@ function App() {
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState("");
   const[submit, setSubmit] = useState(false);
+  const[click, setClick] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +40,12 @@ function App() {
       .get(
         `https://api.unsplash.com/search/photos?page=1&query=${filter}&client_id=${ACCESS_KEY}`
       )
-      .then((response) => setPhotoList(response.data.results))
+      .then((response) => 
+      {
+        setPhotoList(response.data.results)
+        setClick(true);
+        setSubmit(false);
+      })
       .catch((error) => {
         setError(error.message);
       })
@@ -47,9 +53,7 @@ function App() {
         setLoading(false);
       });
   }, [filter]);
-  
 
- 
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -69,6 +73,9 @@ function App() {
       .then((response) => {
         setPhotoList(response.data.results);
         setSubmit(true);
+        setClick(false);
+        console.log('searchClicked:', click);
+
 
       })
       .catch((error) => {
@@ -81,8 +88,9 @@ function App() {
     // setValue("");
   };
   useEffect (()=>{
-    console.log('value:', value);
+    // console.log('value:', value);
     setSubmit(false);
+    // setClick(false);
   },[value]);
   return (
     <>
@@ -93,8 +101,8 @@ function App() {
         handleSubmit={handleSubmit}
         error={error}
       />
-      <Option setFilter={setFilter} />
-      <Pictures photoList={photoList} loading={loading} error={error} value ={value} submit = {submit}/>
+      <Option setFilter={setFilter} setClick = {setClick} />
+      <Pictures photoList={photoList} loading={loading} error={error} value ={value} submit = {submit} click = {click} filter = {filter}/>
     </>
   );
 }

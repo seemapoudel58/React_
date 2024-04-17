@@ -1,6 +1,6 @@
-import Error from './error';
+import Error from "./error";
 
-const Pictures = ({ photoList, loading, error,value, submit}) => {
+const Pictures = ({ photoList, loading, error, value, submit, filter,click }) => {
   return (
     <div>
       {loading ? (
@@ -32,12 +32,23 @@ const Pictures = ({ photoList, loading, error,value, submit}) => {
         <>
           <h3 className="mt-[1rem] text-4xl font-semibold ">Pictures</h3>
           {submit && (
-  <>
-    <h2 className='flex flex-start italic text-lg ' >
-      Showing results for {value}
-    </h2>
-  </>
-)}
+            <>
+              <h2 className="flex flex-start italic text-lg ">
+                Showing results for {value}
+              </h2>
+            </>
+          )}
+            {click && 
+            (
+              <>
+                <h2 className="flex flex-start italic text-lg ">
+                  Showing results for {filter}
+                
+                </h2>
+                
+              </>
+            )}
+            {console.log('click', click)}
           <ul className="grid grid-cols-1 sm:grid-cols-2 mt-[2rem] gap-5 max-w-[80vw] md:grid-cols-3 lg:grid-cols-4 mx-auto">
             {photoList.map((photo, index) => {
               return (

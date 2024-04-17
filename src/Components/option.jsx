@@ -1,6 +1,6 @@
 import { OptionItems } from "./OptionItems";
 
-const Option = ({ setFilter }) => {
+const Option = ({ setFilter, setClick }) => {
   return (
     <div className="max-w-[60vw] mx-auto flex justify-center items-center gap-4 lg:grid-cols-4 md:gap-1 mt-[2rem]  ">
       <ul>
@@ -10,7 +10,12 @@ const Option = ({ setFilter }) => {
               <div className="moving-border absolute inset-0 h-full w-full rounded-full bg-[conic-gradient(#0ea5e9_20deg,transparent_120deg)]"></div>
 
               <button
-                onClick={() => setFilter(item.title.toLocaleLowerCase())}
+                onClick={() =>
+                  {
+                    setFilter(item.title.toLocaleLowerCase())
+                    setClick(true);
+                  }                 
+                  }
                 className="relative z-20 flex justify-center items-center w-full rounded-3xl border-2 border-gray px-4 py-2 bg-gray-200 item-center "
               >
                 {item.title}
