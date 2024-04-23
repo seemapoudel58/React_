@@ -1,4 +1,4 @@
-import Error from "./error";
+import Error from "./Error";
 
 const Pictures = ({ photoList, loading, error, value, submit, filter,click }) => {
   return (
@@ -31,14 +31,14 @@ const Pictures = ({ photoList, loading, error, value, submit, filter,click }) =>
       ) : (
         <>
           <h3 className="mt-[1rem] text-4xl font-semibold ">Pictures</h3>
-          {submit && (
+          {submit && !click && (
             <>
               <h2 className="flex flex-start italic text-lg ">
                 Showing results for {value}
               </h2>
             </>
           )}
-            {click && 
+            {click && !submit &&
             (
               <>
                 <h2 className="flex flex-start italic text-lg ">
@@ -58,7 +58,7 @@ const Pictures = ({ photoList, loading, error, value, submit, filter,click }) =>
                 >
                   <div className="h-full w-full">
                     <img
-                      src={photo.urls.regular}
+                      src={photo.urls.small}
                       alt={photo.alt_description || "No Caption"}
                       className="w-full h-full rounded-3xl hover:brightness-[.2] object-cover transition-transform duration-300 ease-in-out"
                     />

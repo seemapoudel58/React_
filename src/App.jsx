@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Header from './Components/header';
-import Search from "./Components/search";
-import Option from './Components/option';
-import Pictures from "./Components/pictures";
+import Header from './Components/Header';
+import Search from "./Components/Search";
+import Option from './Components/Option';
+import Pictures from "./Components/Pictures";
 import { ACCESS_KEY } from "./utils/config";
 import axios from "axios";
+import Footer from "./Components/Footer";
 
 function App() {
   const [photoList, setPhotoList] = useState([]);
@@ -15,6 +16,8 @@ function App() {
   const [filter, setFilter] = useState("");
   const[submit, setSubmit] = useState(false);
   const[click, setClick] = useState(false);
+  const[pages, setPages] = useState(1);
+  const[totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -38,13 +41,16 @@ function App() {
     setLoading(true);
     axios
       .get(
-        `https://api.unsplash.com/search/photos?page=1&query=${filter}&client_id=${ACCESS_KEY}`
+        `https://api.unsplash.com/search/photos?page=${pages}&per_page=12&query=${filter}&client_id=${ACCESS_KEY}`
       )
       .then((response) => 
       {
-        setPhotoList(response.data.results)
+        setPhotoList(response.data.results);
+        setTotalPages(response.data.total_pages);
         setClick(true);
         setSubmit(false);
+    // setPages(1);
+
       })
       .catch((error) => {
         setError(error.message);
@@ -52,31 +58,29 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, [filter]);
+  }, [filter, pages]);
 
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     setLoading(true);
-    e.preventDefault();
 
     // if there's no search text then return or do nothing
     if (!value.trim()) return;
 
     axios
       .get(
-        `https://api.unsplash.com/search/photos?page=1&query=${value}&client_id=${ACCESS_KEY}`
+        `https://api.unsplash.com/search/photos?page=${pages}&per_page=12&query=${value}&client_id=${ACCESS_KEY}`
       )
       .then((response) => {
         setPhotoList(response.data.results);
+        setTotalPages(response.data.total_pages);
         setSubmit(true);
         setClick(false);
-        console.log('searchClicked:', click);
-
-
+        // console.log('searchClicked:', click);
       })
       .catch((error) => {
         setError(error.message);
@@ -87,22 +91,37 @@ function App() {
 
     // setValue("");
   };
+
+  useEffect (() =>{
+    handleSubmit();
+
+  }, [pages]);
+
+  const handleFormSubmit = (e) =>{
+    e.preventDefault();
+    handleSubmit();
+    setPages(1);
+  }
+
   useEffect (()=>{
     // console.log('value:', value);
     setSubmit(false);
     // setClick(false);
   },[value]);
+
+  console.log('page' , pages);
   return (
     <>
       <Header />
       <Search
         handleChange={handleChange}
         value={value}
-        handleSubmit={handleSubmit}
+        handleFormSubmit={handleFormSubmit}
         error={error}
       />
-      <Option setFilter={setFilter} setClick = {setClick} />
+      <Option setFilter={setFilter} setClick = {setClick} setSubmit= {setSubmit} setValue = {setValue} setPages= {setPages}/>
       <Pictures photoList={photoList} loading={loading} error={error} value ={value} submit = {submit} click = {click} filter = {filter}/>
+      <Footer  pages = {pages} totalPages = {totalPages} setPages= {setPages}/>
     </>
   );
 }
