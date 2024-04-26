@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Header from './Components/Header';
+import Header from "./Components/Header";
 import Search from "./Components/Search";
-import Option from './Components/Option';
+import Option from "./Components/Buttons";
 import Pictures from "./Components/Pictures";
 import { ACCESS_KEY } from "./utils/config";
 import axios from "axios";
 import Footer from "./Components/Footer";
+import ThemeButton from "./Components/ThemeButton";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {
   const [photoList, setPhotoList] = useState([]);
@@ -14,10 +16,10 @@ function App() {
   const [error, setError] = useState(null);
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState("");
-  const[submit, setSubmit] = useState(false);
-  const[click, setClick] = useState(false);
-  const[pages, setPages] = useState(1);
-  const[totalPages, setTotalPages] = useState(0);
+  const [submit, setSubmit] = useState(false);
+  const [click, setClick] = useState(false);
+  const [pages, setPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -43,14 +45,12 @@ function App() {
       .get(
         `https://api.unsplash.com/search/photos?page=${pages}&per_page=12&query=${filter}&client_id=${ACCESS_KEY}`
       )
-      .then((response) => 
-      {
+      .then((response) => {
         setPhotoList(response.data.results);
         setTotalPages(response.data.total_pages);
         setClick(true);
         setSubmit(false);
-    // setPages(1);
-
+        // setPages(1);
       })
       .catch((error) => {
         setError(error.message);
@@ -59,7 +59,6 @@ function App() {
         setLoading(false);
       });
   }, [filter, pages]);
-
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -92,26 +91,45 @@ function App() {
     // setValue("");
   };
 
-  useEffect (() =>{
+  useEffect(() => {
     handleSubmit();
-
   }, [pages]);
 
-  const handleFormSubmit = (e) =>{
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSubmit();
     setPages(1);
-  }
+  };
 
-  useEffect (()=>{
+  useEffect(() => {
     // console.log('value:', value);
     setSubmit(false);
     // setClick(false);
-  },[value]);
+  }, [value]);
 
-  console.log('page' , pages);
+  console.log("page", pages);
+
+
+  const[ themeMode, setThemeMode] = useState('light');
+
+  const darkTheme = () =>{
+    setThemeMode('dark');
+  }
+  const lightTheme = () =>{
+    setThemeMode('light');
+  }
+
+  useEffect (() =>{
+    document.querySelector('html').classList.remove('dark', 'light');
+    document.querySelector('html').classList.add(themeMode);
+
+  },[themeMode])
+
+
+
   return (
-    <>
+    <ThemeProvider value= {{themeMode, darkTheme, lightTheme}}>
+      <ThemeButton />
       <Header />
       <Search
         handleChange={handleChange}
@@ -119,10 +137,24 @@ function App() {
         handleFormSubmit={handleFormSubmit}
         error={error}
       />
-      <Option setFilter={setFilter} setClick = {setClick} setSubmit= {setSubmit} setValue = {setValue} setPages= {setPages}/>
-      <Pictures photoList={photoList} loading={loading} error={error} value ={value} submit = {submit} click = {click} filter = {filter}/>
-      <Footer  pages = {pages} totalPages = {totalPages} setPages= {setPages}/>
-    </>
+      <Option
+        setFilter={setFilter}
+        setClick={setClick}
+        setSubmit={setSubmit}
+        setValue={setValue}
+        setPages={setPages}
+      />
+      <Pictures
+        photoList={photoList}
+        loading={loading}
+        error={error}
+        value={value}
+        submit={submit}
+        click={click}
+        filter={filter}
+      />
+      <Footer pages={pages} totalPages={totalPages} setPages={setPages} />
+    </ThemeProvider>
   );
 }
 
