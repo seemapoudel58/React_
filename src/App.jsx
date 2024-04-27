@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import Header from "./Components/Header";
-import Search from "./Components/Search";
-import Option from "./Components/Buttons";
-import Pictures from "./Components/Pictures";
-import { ACCESS_KEY } from "./utils/config";
-import axios from "axios";
-import Footer from "./Components/Footer";
-import ThemeButton from "./Components/ThemeButton";
-import { ThemeProvider } from "./Context/ThemeContext";
+import { useEffect, useState } from "react";
 
-function App() {
+import axios from "axios";
+
+import Search from "./components/Search";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Option from "./components/Buttons";
+import { ACCESS_KEY } from "./utils/config";
+import Pictures from "./components/Pictures";
+import ThemeButton from "./components/ThemeButton";
+import { ThemeProvider } from "./context/ThemeContext";
+
+import "./App.css";
+
+const App = () => {
   const [photoList, setPhotoList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -107,28 +110,23 @@ function App() {
     // setClick(false);
   }, [value]);
 
-  console.log("page", pages);
+  const [themeMode, setThemeMode] = useState("light");
 
+  const darkTheme = () => {
+    setThemeMode("dark");
+  };
+  const lightTheme = () => {
+    setThemeMode("light");
+  };
 
-  const[ themeMode, setThemeMode] = useState('light');
-
-  const darkTheme = () =>{
-    setThemeMode('dark');
-  }
-  const lightTheme = () =>{
-    setThemeMode('light');
-  }
-
-  useEffect (() =>{
-    document.querySelector('html').classList.remove('dark', 'light');
-    document.querySelector('html').classList.add(themeMode);
-
-  },[themeMode])
-
-
+  useEffect(() => {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.remove("light");
+    document.documentElement.classList.add(themeMode);
+  }, [themeMode]);
 
   return (
-    <ThemeProvider value= {{themeMode, darkTheme, lightTheme}}>
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
       <ThemeButton />
       <Header />
       <Search
@@ -156,6 +154,6 @@ function App() {
       <Footer pages={pages} totalPages={totalPages} setPages={setPages} />
     </ThemeProvider>
   );
-}
+};
 
 export default App;

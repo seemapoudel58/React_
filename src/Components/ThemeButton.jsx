@@ -1,36 +1,27 @@
-import React, { useState } from "react";
+// ThemeButton.js
 import { MdDarkMode } from "react-icons/md";
 import { IoSunnySharp } from "react-icons/io5";
-import useTheme from "../Context/ThemeContext";
-
-
+import useTheme from "../context/ThemeContext";
 
 const ThemeButton = () => {
+  const { themeMode, lightTheme, darkTheme } = useTheme();
 
-  const { themeMode, lightTheme, darkTheme } = useTheme(); 
+  console.log("THEME MODE ", themeMode);
 
-  const [ isDarkMode, setIsDarkMode] = useState(false);
-  
+  // Remove the useState for isDarkMode since it will be managed by themeMode
 
-  const handleTheme = () => { 
-    setIsDarkMode(!isDarkMode);
-    if(themeMode === 'dark'){
+  const handleTheme = () => {
+    if (themeMode === "dark") {
       lightTheme();
-
-    }else {
+    } else {
       darkTheme();
     }
-
-  }
+  };
 
   return (
-    <div 
-    className="flex float-end text-4xl text-black cursor-pointer hover:scale-105"
-    >
-      <button
-      className="bg-gray-400 rounded-md p-2"
-      onClick={handleTheme}>
-        {isDarkMode? <IoSunnySharp /> :  <MdDarkMode />}
+    <div className="flex float-end text-4xl text-black cursor-pointer hover:scale-105">
+      <button className="bg-gray-400 rounded-md p-2" onClick={handleTheme}>
+        {themeMode === "dark" ? <IoSunnySharp /> : <MdDarkMode />}
       </button>
     </div>
   );
