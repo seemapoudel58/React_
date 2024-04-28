@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import Search from "./components/Search";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Option from "./components/Buttons";
+import Search from "./Components/Search";
+import Header from "./Components/Header";
+import Footer from './Components/Footer'
+import Option from "./Components/Option";
 import { ACCESS_KEY } from "./utils/config";
-import Pictures from "./components/Pictures";
-import ThemeButton from "./components/ThemeButton";
-import { ThemeProvider } from "./context/ThemeContext";
+import Pictures from "./Components/Pictures";
+import ThemeButton from "./Components/ThemeButton";
+
+import { ThemeProvider } from './context/ThemeContext'
 
 import "./App.css";
 
